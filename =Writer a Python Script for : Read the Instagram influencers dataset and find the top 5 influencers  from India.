@@ -1,0 +1,19 @@
+import pandas as pd 
+ 
+# Load the dataset 
+file_name = "top_insta_influencers_data.csv" 
+df = pd.read_csv(file_name) 
+ 
+# Display the first few rows to understand the structure 
+print(df.head()) 
+ 
+# Assuming the dataset has columns 'Country' and 'Followers' 
+# Filter influencers from India 
+df_india = df[df['country'].str.lower() == 'india'] 
+ 
+# Sort by followers count in descending order 
+df_india_sorted = df_india.sort_values(by='followers', ascending=False) 
+# Get the top 5 influencers 
+top_5_influencers = df_india_sorted.head(5) 
+# Display the top 5 influencers 
+print(top_5_influencers)
