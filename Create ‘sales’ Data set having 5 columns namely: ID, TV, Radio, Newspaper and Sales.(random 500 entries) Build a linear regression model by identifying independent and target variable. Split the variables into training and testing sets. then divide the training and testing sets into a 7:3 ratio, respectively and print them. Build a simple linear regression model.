@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+np.random.seed(42) 
+sales_data = pd.DataFrame({
+ 'ID': np.arange(1, 501),
+ 'TV': np.random.uniform(50, 300, 500),
+ 'Radio': np.random.uniform(5, 50, 500),
+ 'Newspaper': np.random.uniform(0, 100, 500),
+ 'Sales': np.random.uniform(5, 30, 500)
+})
+
+dependent_variable = 'Sales'
+independent_variables = ['TV', 'Radio', 'Newspaper']
+X = sales_data[independent_variables] # Independent variables
+y = sales_data[dependent_variable] # Target variable
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+print("Training Set:")
+print(X_train.head(), "\n", y_train.head())
+print("\nTesting Set:")
+print(X_test.head(), "\n", y_test.head())
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+print("\nModel Coefficients:", model.coef_)
+print("Intercept:", model.intercept_)
