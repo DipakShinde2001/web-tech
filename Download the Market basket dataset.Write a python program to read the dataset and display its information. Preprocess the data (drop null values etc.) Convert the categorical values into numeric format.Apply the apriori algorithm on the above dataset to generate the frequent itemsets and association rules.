@@ -1,0 +1,20 @@
+import pandas as pd
+from mlxtend.frequent_patterns import apriori, association_rules
+# Load the dataset
+file_path = "Market_Basket_analysis.csv" # Update the path if needed
+df = pd.read_csv(file_path)
+# Drop duplicate and null values
+df = df.dropna().drop_duplicates()
+# Extract individual items from the 'rules' column
+df['rules'] = df['rules'].str.extract(r'\{(.*?)\}')
+# Convert categorical values to numeric format (one-hot encoding)
+encoded_df = pd.get_dummies(df[['rules', 'caterory LHS', 'caterory RHS']])
+# Apply the Apriori algorithm
+frequent_itemsets = apriori(encoded_df, min_support=0.05, use_colnames=True)
+# Generate association rules
+rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1.0)
+# Display results
+print("Frequent Itemsets:")
+print(frequent_itemsets.head())
+print("\nAssociation Rules:")
+print(rules.head())
