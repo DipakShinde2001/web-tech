@@ -1,0 +1,18 @@
+import re
+import nltk
+from nltk.tokenize import sent_tokenize
+nltk.download('all')
+def preprocess_text(text):
+ return re.sub(r'[^a-zA-Z\s]', '', text)
+def extractive_summary(text, num_sentences=2):
+ sentences = sent_tokenize(text)
+ return ' '.join(sentences[:num_sentences])
+# Example text
+text = "@1.Artificial Intelligence is transforming industries. AI applications range from voice
+assistants to data analysis. Companies invest in AI for better productivity. AI raises ethical concerns
+like bias and job loss. Despite challenges, AI is shaping the future."
+# Preprocess and summarize
+clean_text = preprocess_text(text)
+summary = extractive_summary(clean_text, num_sentences=2)
+print("Summary:")
+print(summary)
